@@ -294,7 +294,27 @@ SELECT * FROM alertas;
 Use o *Query editor* do Azure SQL no Portal, ou o Azure Data Studio/SSMS. Localmente:
 `docker exec -it aether-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "<senha>" -C -d aether -Q "SELECT * FROM usuarios"`.
 
-## 10. Estrutura do projeto
+## 10. Testes de integração (Postman)
+
+A collection [`postman/Incluze.postman_collection.json`](postman/Incluze.postman_collection.json) foi gerada a partir do OpenAPI (`/v3/api-docs`) e cobre **as 20 operações documentadas** em 74 requisições e 243 asserções:
+
+- status HTTP de sucesso e de erro (201, 200, 204, 302, 400, 404, 405, 409, 415);
+- contrato: cada resposta é validada contra o JSON Schema do DTO publicado no OpenAPI;
+- erros: formato `ErrorResponse` e ausência de stack trace ou detalhes internos;
+- regras de negócio: pontos (+10/+5 e estorno), nota média recalculada, unicidade de e-mail e de avaliação, bloqueio de exclusão com vínculos;
+- limpeza: todos os registros criados pelo teste são excluídos no final.
+
+**Evidência (execução contra o Azure):** [`postman/evidencias/relatorio-newman.html`](postman/evidencias/relatorio-newman.html) — 74 requisições, 243 asserções, **0 falhas**.
+
+Para rodar no **Postman**: *Import* → selecione a collection e o environment `postman/Incluze-Azure.postman_environment.json` → *Run collection*.
+
+Para rodar pelo terminal (Newman):
+
+```bash
+npx newman run postman/Incluze.postman_collection.json -e postman/Incluze-Azure.postman_environment.json
+```
+
+## 11. Estrutura do projeto
 
 ```text
 .
@@ -314,13 +334,14 @@ Use o *Query editor* do Azure SQL no Portal, ou o Azure Data Studio/SSMS. Localm
 │   ├── application.properties
 │   ├── application-dev.properties
 │   └── application-prd.properties
+├── postman/          # collection, environment e evidências dos testes
 ├── Dockerfile
 ├── docker-compose.yml
 ├── DEPLOY_AZURE.md
 └── README.md
 ```
 
-## 11. Integrantes
+## 12. Integrantes
 
 | Nome | RM |
 |---|---|

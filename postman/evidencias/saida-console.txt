@@ -1,0 +1,511 @@
+newman
+
+Incluze - Testes de Integração (API v1)
+
+□ 00 - Infraestrutura e documentação
+└ GET / redireciona para o Swagger UI
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/ [302 Found, 201B, 96ms]
+  √  Status 302
+  √  Tempo de resposta < 15s
+  √  Location aponta para o Swagger UI
+
+└ GET /v3/api-docs (OpenAPI)
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/v3/api-docs [200 OK, 17.26kB, 45ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Documento OpenAPI 3.x
+  √  Documenta as 20 operações do CRUD
+  √  Todas as rotas usam o prefixo /api/v1
+
+□ 01 - Usuários
+└ POST usuário A → 201
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [201 Created, 391B, 60ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema UsuarioResponse do OpenAPI
+  √  Pontos iniciam em 0
+  √  E-mail normalizado em minúsculas
+  √  dataCadastro preenchida pela API
+
+└ POST usuário B → 201
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [201 Created, 391B, 38ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema UsuarioResponse do OpenAPI
+
+└ POST usuário inválido → 400 com campos
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [400 Bad Request, 493B, 24ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+  √  Lista os campos nome e email
+
+└ POST e-mail duplicado (maiúsculas) → 409
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [409 Conflict, 398B, 38ms]
+  √  Status 409
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ GET lista usuários → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [200 OK, 1.07kB, 37ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Lista é um array
+  ┌
+  │ `Using "tv4" is deprecated. Use "require('ajv')" inste
+  │ ad.`
+  └
+  √  Itens seguem o schema UsuarioResponse
+  √  Contém o usuário A criado
+
+└ GET usuário por id → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [200 OK, 384B, 32ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema UsuarioResponse do OpenAPI
+  √  Retorna o usuário A
+
+└ GET usuário inexistente → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/999999999 [404 Not Found, 398B, 29ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ GET usuário com id não numérico → 400
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/abc [400 Bad Request, 434B, 23ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT usuário → 200
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [200 OK, 390B, 45ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema UsuarioResponse do OpenAPI
+  √  Nome e cidade atualizados
+  √  Pontos preservados
+
+└ PUT usuário inválido → 400
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [400 Bad Request, 548B, 28ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT usuário inexistente → 404
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/999999999 [404 Not Found, 398B, 36ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT com e-mail de outro usuário → 409
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [409 Conflict, 403B, 34ms]
+  √  Status 409
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+□ 02 - Locais
+└ POST local 1 → 201
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais [201 Created, 509B, 32ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema LocalResponse do OpenAPI
+  √  Sem avaliações: notaMedia nula
+  √  Recursos de inclusão invisível persistidos
+
+└ POST local 2 → 201
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais [201 Created, 508B, 35ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema LocalResponse do OpenAPI
+
+└ POST local inválido → 400 com campos
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais [400 Bad Request, 1.05kB, 21ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+  √  Aponta endereço, cidade e categoria
+
+└ POST local com categoria inexistente → 400
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais [400 Bad Request, 428B, 28ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ GET lista locais → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais [200 OK, 1.72kB, 39ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Lista é um array
+  ┌
+  │ `Using "tv4" is deprecated. Use "require('ajv')" inste
+  │ ad.`
+  └
+  √  Itens seguem o schema LocalResponse
+  √  Contém o local 1
+
+└ GET local por id → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 503B, 28ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema LocalResponse do OpenAPI
+
+└ GET local inexistente → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/999999999 [404 Not Found, 393B, 29ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT local → 200
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 501B, 32ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema LocalResponse do OpenAPI
+  √  Recursos atualizados
+
+└ PUT local inválido → 400
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [400 Bad Request, 567B, 23ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT local inexistente → 404
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/999999999 [404 Not Found, 393B, 46ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+□ 03 - Avaliações (pontos e nota média)
+└ POST avaliação A→local1 (nota 4) → 201
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [201 Created, 455B, 48ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AvaliacaoResponse do OpenAPI
+  √  Relacionamentos achatados no DTO
+
+└ Verifica: Usuário A ganhou 10 pontos
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [200 OK, 391B, 34ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Usuário A ganhou 10 pontos
+
+└ Verifica: Nota média do local 1 = 4.0
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 500B, 30ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Nota média do local 1 = 4.0
+
+└ POST avaliação B→local1 (nota 5) → 201
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [201 Created, 445B, 53ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AvaliacaoResponse do OpenAPI
+
+└ Verifica: Nota média do local 1 = 4.5
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 500B, 31ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Nota média do local 1 = 4.5
+
+└ POST avaliação com nota 9 → 400
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [400 Bad Request, 426B, 22ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+  √  Aponta o campo nota
+
+└ POST avaliação com usuário inexistente → 404
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [404 Not Found, 390B, 49ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ POST avaliação com local inexistente → 404
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [404 Not Found, 387B, 29ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ POST segunda avaliação A→local1 → 409
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [409 Conflict, 414B, 39ms]
+  √  Status 409
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ GET lista avaliações → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes [200 OK, 1.39kB, 43ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Lista é um array
+  ┌
+  │ `Using "tv4" is deprecated. Use "require('ajv')" inste
+  │ ad.`
+  └
+  √  Itens seguem o schema AvaliacaoResponse
+
+└ GET avaliação por id → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/6 [200 OK, 448B, 40ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AvaliacaoResponse do OpenAPI
+  √  Nota 4
+
+└ GET avaliação inexistente → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/999999999 [404 Not Found, 403B, 27ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT avaliação (nota 2) → 200
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/6 [200 OK, 433B, 42ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AvaliacaoResponse do OpenAPI
+  √  Nota atualizada para 2
+
+└ Verifica: Nota média recalculada = 3.5
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 500B, 36ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Nota média recalculada = 3.5
+
+└ PUT avaliação inválida → 400
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/6 [400 Bad Request, 651B, 21ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT avaliação inexistente → 404
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/999999999 [404 Not Found, 403B, 31ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT avaliação B para autor A (duplicaria A→local1) → 409
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/7 [409 Conflict, 404B, 38ms]
+  √  Status 409
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+□ 04 - Alertas (Waze da inclusão)
+└ POST alerta → 201 (ativo por padrão)
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas [201 Created, 544B, 37ms]
+  √  Status 201
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AlertaResponse do OpenAPI
+  √  Nasce ativo
+  √  dataCriacao preenchida
+
+└ Verifica: Usuário A acumulou 15 pontos (10 + 5)
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [200 OK, 391B, 34ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Usuário A acumulou 15 pontos (10 + 5)
+
+└ POST alerta com expiração no passado → 400
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas [400 Bad Request, 455B, 23ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+  √  Aponta dataExpiracao
+
+└ POST alerta com tipo inexistente → 400
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas [400 Bad Request, 429B, 29ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ POST alerta com local inexistente → 404
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas [404 Not Found, 384B, 35ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ GET lista alertas → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas [200 OK, 852B, 41ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Lista é um array
+  ┌
+  │ `Using "tv4" is deprecated. Use "require('ajv')" inste
+  │ ad.`
+  └
+  √  Itens seguem o schema AlertaResponse
+
+└ GET alerta por id → 200
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/4 [200 OK, 537B, 29ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AlertaResponse do OpenAPI
+
+└ GET alerta inexistente → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/999999999 [404 Not Found, 395B, 29ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT alerta (desativar) → 200
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/4 [200 OK, 532B, 37ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Corpo segue o schema AlertaResponse do OpenAPI
+  √  Alerta desativado
+
+└ PUT alerta inválido → 400
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/4 [400 Bad Request, 713B, 25ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ PUT alerta inexistente → 404
+  PUT https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/999999999 [404 Not Found, 395B, 34ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+□ 05 - Integridade e protocolo HTTP
+└ DELETE usuário com vínculos → 409
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [409 Conflict, 433B, 38ms]
+  √  Status 409
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ DELETE local com vínculos → 409
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [409 Conflict, 425B, 33ms]
+  √  Status 409
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ JSON malformado → 400
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [400 Bad Request, 430B, 22ms]
+  √  Status 400
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ Content-Type text/plain → 415
+  POST https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios [415 Unsupported Media Type, 487B, 25ms]
+  √  Status 415
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ Método não suportado (PATCH) → 405
+  PATCH https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [405 Method Not Allowed, 342B, 25ms]
+  √  Status 405
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ Rota inexistente → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/inexistente [404 Not Found, 367B, 22ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+□ 06 - Exclusões (limpeza dos dados de teste)
+└ DELETE alerta → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/4 [204 No Content, 153B, 45ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+  √  Sem corpo
+
+└ DELETE alerta já removido → 404
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/alertas/4 [404 Not Found, 379B, 29ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ Verifica: Pontos do alerta estornados (15 → 10)
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [200 OK, 391B, 30ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Pontos do alerta estornados (15 → 10)
+
+└ DELETE avaliação 1 → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/6 [204 No Content, 153B, 37ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+
+└ Verifica: Nota média volta a 5.0 (só a avaliação de B)
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 500B, 27ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Nota média volta a 5.0 (só a avaliação de B)
+
+└ DELETE avaliação 2 → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/7 [204 No Content, 153B, 40ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+
+└ DELETE avaliação inexistente → 404
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/avaliacoes/999999999 [404 Not Found, 403B, 26ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ Verifica: Sem avaliações: notaMedia nula
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [200 OK, 501B, 26ms]
+  √  Status 200
+  √  Tempo de resposta < 15s
+  √  Sem avaliações: notaMedia nula
+
+└ DELETE local 1 → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [204 No Content, 153B, 35ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+
+└ DELETE local 2 → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/7 [204 No Content, 153B, 33ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+
+└ GET local excluído → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/6 [404 Not Found, 377B, 24ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ DELETE local inexistente → 404
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/locais/999999999 [404 Not Found, 393B, 26ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ DELETE usuário A → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [204 No Content, 153B, 33ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+
+└ DELETE usuário B → 204
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/7 [204 No Content, 153B, 33ms]
+  √  Status 204
+  √  Tempo de resposta < 15s
+
+└ GET usuário excluído → 404
+  GET https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/6 [404 Not Found, 382B, 25ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+└ DELETE usuário inexistente → 404
+  DELETE https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/api/v1/usuarios/999999999 [404 Not Found, 398B, 24ms]
+  √  Status 404
+  √  Tempo de resposta < 15s
+  √  Erro padronizado (ErrorResponse) sem detalhes internos
+
+┌─────────────────────────┬───────────────────┬──────────────────┐
+│                         │          executed │           failed │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│              iterations │                 1 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│                requests │                74 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│            test-scripts │                74 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│      prerequest-scripts │                74 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│              assertions │               243 │                0 │
+├─────────────────────────┴───────────────────┴──────────────────┤
+│ total run duration: 8.6s                                       │
+├────────────────────────────────────────────────────────────────┤
+│ total data received: 36.04kB (approx)                          │
+├────────────────────────────────────────────────────────────────┤
+│ average response time: 33ms [min: 21ms, max: 96ms, s.d.: 10ms] │
+└────────────────────────────────────────────────────────────────┘

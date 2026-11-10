@@ -1,0 +1,2928 @@
+{
+  "info": {
+    "name": "Incluze - Testes de Integração (API v1)",
+    "description": "Gerada a partir do OpenAPI (/v3/api-docs). Cobre as 20 operações documentadas, códigos de sucesso e erro, contrato (JSON Schema), regras de negócio (pontos, nota média, unicidade, vínculos) e remove os dados que cria.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get(\"run\")) pm.collectionVariables.set(\"run\", Date.now());"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "run",
+      "value": ""
+    },
+    {
+      "key": "schema_UsuarioResponse",
+      "value": "{\"type\": \"object\", \"properties\": {\"id\": {\"type\": [\"integer\", \"null\"]}, \"nome\": {\"type\": [\"string\", \"null\"]}, \"email\": {\"type\": [\"string\", \"null\"]}, \"tipoDeficiencia\": {\"type\": [\"string\", \"null\"], \"enum\": [\"FISICA\", \"VISUAL\", \"AUDITIVA\", \"INTELECTUAL\", \"NEURODIVERGENTE\", \"MULTIPLA\", \"NENHUMA\"]}, \"cidade\": {\"type\": [\"string\", \"null\"]}, \"pontos\": {\"type\": [\"integer\", \"null\"]}, \"dataCadastro\": {\"type\": [\"string\", \"null\"]}}, \"required\": [\"id\", \"nome\", \"email\", \"tipoDeficiencia\", \"cidade\", \"pontos\", \"dataCadastro\"], \"additionalProperties\": false}"
+    },
+    {
+      "key": "schema_LocalResponse",
+      "value": "{\"type\": \"object\", \"properties\": {\"id\": {\"type\": [\"integer\", \"null\"]}, \"nome\": {\"type\": [\"string\", \"null\"]}, \"endereco\": {\"type\": [\"string\", \"null\"]}, \"cidade\": {\"type\": [\"string\", \"null\"]}, \"categoria\": {\"type\": [\"string\", \"null\"], \"enum\": [\"RESTAURANTE\", \"HOSPITAL\", \"ORGAO_PUBLICO\", \"TRANSPORTE\", \"COMERCIO\", \"EDUCACAO\", \"LAZER\", \"OUTRO\"]}, \"possuiRampa\": {\"type\": [\"boolean\", \"null\"]}, \"atendimentoLibras\": {\"type\": [\"boolean\", \"null\"]}, \"cardapioBraille\": {\"type\": [\"boolean\", \"null\"]}, \"aceitaCaoGuia\": {\"type\": [\"boolean\", \"null\"]}, \"ambienteBaixoEstimulo\": {\"type\": [\"boolean\", \"null\"]}, \"notaMedia\": {\"type\": [\"number\", \"null\"]}, \"dataCadastro\": {\"type\": [\"string\", \"null\"]}}, \"required\": [\"id\", \"nome\", \"endereco\", \"cidade\", \"categoria\", \"possuiRampa\", \"atendimentoLibras\", \"cardapioBraille\", \"aceitaCaoGuia\", \"ambienteBaixoEstimulo\", \"notaMedia\", \"dataCadastro\"], \"additionalProperties\": false}"
+    },
+    {
+      "key": "schema_AvaliacaoResponse",
+      "value": "{\"type\": \"object\", \"properties\": {\"id\": {\"type\": [\"integer\", \"null\"]}, \"nota\": {\"type\": [\"integer\", \"null\"]}, \"comentario\": {\"type\": [\"string\", \"null\"]}, \"acessibilidadeConfirmada\": {\"type\": [\"boolean\", \"null\"]}, \"dataAvaliacao\": {\"type\": [\"string\", \"null\"]}, \"usuarioId\": {\"type\": [\"integer\", \"null\"]}, \"usuarioNome\": {\"type\": [\"string\", \"null\"]}, \"localId\": {\"type\": [\"integer\", \"null\"]}, \"localNome\": {\"type\": [\"string\", \"null\"]}}, \"required\": [\"id\", \"nota\", \"comentario\", \"acessibilidadeConfirmada\", \"dataAvaliacao\", \"usuarioId\", \"usuarioNome\", \"localId\", \"localNome\"], \"additionalProperties\": false}"
+    },
+    {
+      "key": "schema_AlertaResponse",
+      "value": "{\"type\": \"object\", \"properties\": {\"id\": {\"type\": [\"integer\", \"null\"]}, \"titulo\": {\"type\": [\"string\", \"null\"]}, \"descricao\": {\"type\": [\"string\", \"null\"]}, \"tipo\": {\"type\": [\"string\", \"null\"], \"enum\": [\"ELEVADOR_QUEBRADO\", \"OBRA_NA_CALCADA\", \"PISO_TATIL_OBSTRUIDO\", \"RAMPA_BLOQUEADA\", \"BANHEIRO_ACESSIVEL_INDISPONIVEL\", \"INTERPRETE_LIBRAS_AUSENTE\", \"OUTRO\"]}, \"ativo\": {\"type\": [\"boolean\", \"null\"]}, \"dataCriacao\": {\"type\": [\"string\", \"null\"]}, \"dataExpiracao\": {\"type\": [\"string\", \"null\"]}, \"usuarioId\": {\"type\": [\"integer\", \"null\"]}, \"usuarioNome\": {\"type\": [\"string\", \"null\"]}, \"localId\": {\"type\": [\"integer\", \"null\"]}, \"localNome\": {\"type\": [\"string\", \"null\"]}}, \"required\": [\"id\", \"titulo\", \"descricao\", \"tipo\", \"ativo\", \"dataCriacao\", \"dataExpiracao\", \"usuarioId\", \"usuarioNome\", \"localId\", \"localNome\"], \"additionalProperties\": false}"
+    },
+    {
+      "key": "schema_ErrorResponse",
+      "value": "{\"type\": \"object\", \"properties\": {\"timestamp\": {\"type\": [\"string\", \"null\"]}, \"status\": {\"type\": \"integer\"}, \"erro\": {\"type\": [\"string\", \"null\"]}, \"mensagem\": {\"type\": [\"string\", \"null\"]}, \"caminho\": {\"type\": [\"string\", \"null\"]}, \"campos\": {\"type\": \"array\", \"items\": {\"type\": \"object\", \"properties\": {\"campo\": {\"type\": [\"string\", \"null\"]}, \"mensagem\": {\"type\": [\"string\", \"null\"]}}}}}, \"required\": [\"timestamp\", \"status\", \"erro\", \"mensagem\", \"caminho\", \"campos\"], \"additionalProperties\": false}"
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Infraestrutura e documentação",
+      "item": [
+        {
+          "name": "GET / redireciona para o Swagger UI",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 302\", () => pm.response.to.have.status(302));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Location aponta para o Swagger UI\", () => pm.expect(pm.response.headers.get(\"Location\")).to.include(\"swagger-ui\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": []
+            }
+          },
+          "protocolProfileBehavior": {
+            "followRedirects": false
+          }
+        },
+        {
+          "name": "GET /v3/api-docs (OpenAPI)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Documento OpenAPI 3.x\", () => pm.expect(pm.response.json().openapi).to.match(/^3\\./));",
+                  "pm.test(\"Documenta as 20 operações do CRUD\", () => { let n = 0; Object.values(pm.response.json().paths).forEach(p => n += Object.keys(p).length); pm.expect(n).to.eql(20); });",
+                  "pm.test(\"Todas as rotas usam o prefixo /api/v1\", () => Object.keys(pm.response.json().paths).forEach(p => pm.expect(p).to.match(/^\\/api\\/v1\\//)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v3/api-docs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v3",
+                "api-docs"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "01 - Usuários",
+      "item": [
+        {
+          "name": "POST usuário A → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema UsuarioResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_UsuarioResponse\"))));",
+                  "pm.collectionVariables.set(\"usuarioA\", pm.response.json().id);",
+                  "pm.test(\"Pontos iniciam em 0\", () => { const b = pm.response.json(); pm.expect(b.pontos === 0).to.be.true; });",
+                  "pm.test(\"E-mail normalizado em minúsculas\", () => { const b = pm.response.json(); pm.expect(b.email === b.email.toLowerCase()).to.be.true; });",
+                  "pm.test(\"dataCadastro preenchida pela API\", () => { const b = pm.response.json(); pm.expect(!!b.dataCadastro).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste Integração A\",\n  \"email\": \"a.{{run}}@teste.com\",\n  \"tipoDeficiencia\": \"VISUAL\",\n  \"cidade\": \"São Paulo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST usuário B → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema UsuarioResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_UsuarioResponse\"))));",
+                  "pm.collectionVariables.set(\"usuarioB\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste Integração B\",\n  \"email\": \"b.{{run}}@teste.com\",\n  \"tipoDeficiencia\": \"AUDITIVA\",\n  \"cidade\": \"Campinas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST usuário inválido → 400 com campos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Lista os campos nome e email\", () => { const b = pm.response.json(); pm.expect(b.campos.map(c => c.campo).includes(\"nome\") && b.campos.map(c => c.campo).includes(\"email\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"A\",\n  \"email\": \"invalido\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST e-mail duplicado (maiúsculas) → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Duplicado\",\n  \"email\": \"A.{{run}}@TESTE.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET lista usuários → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema UsuarioResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_UsuarioResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Contém o usuário A criado\", () => { const b = pm.response.json(); pm.expect(b.some(u => u.id == pm.collectionVariables.get(\"usuarioA\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET usuário por id → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema UsuarioResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_UsuarioResponse\"))));",
+                  "pm.test(\"Retorna o usuário A\", () => { const b = pm.response.json(); pm.expect(b.id == pm.collectionVariables.get(\"usuarioA\") && b.nome === \"Teste Integração A\").to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET usuário inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "999999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET usuário com id não numérico → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "abc"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT usuário → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema UsuarioResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_UsuarioResponse\"))));",
+                  "pm.test(\"Nome e cidade atualizados\", () => { const b = pm.response.json(); pm.expect(b.nome === \"Teste Integração A (editado)\" && b.cidade === \"Santos\").to.be.true; });",
+                  "pm.test(\"Pontos preservados\", () => { const b = pm.response.json(); pm.expect(b.pontos === 0).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste Integração A (editado)\",\n  \"email\": \"a.{{run}}@teste.com\",\n  \"tipoDeficiencia\": \"VISUAL\",\n  \"cidade\": \"Santos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT usuário inválido → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"email\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT usuário inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "999999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste Integração A\",\n  \"email\": \"a.{{run}}@teste.com\",\n  \"tipoDeficiencia\": \"VISUAL\",\n  \"cidade\": \"São Paulo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT com e-mail de outro usuário → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste Integração A\",\n  \"email\": \"b.{{run}}@teste.com\",\n  \"tipoDeficiencia\": \"VISUAL\",\n  \"cidade\": \"São Paulo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Locais",
+      "item": [
+        {
+          "name": "POST local 1 → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema LocalResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\"))));",
+                  "pm.collectionVariables.set(\"local1\", pm.response.json().id);",
+                  "pm.test(\"Sem avaliações: notaMedia nula\", () => { const b = pm.response.json(); pm.expect(b.notaMedia === null).to.be.true; });",
+                  "pm.test(\"Recursos de inclusão invisível persistidos\", () => { const b = pm.response.json(); pm.expect(b.atendimentoLibras === true && b.aceitaCaoGuia === true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Local Teste Restaurante\",\n  \"endereco\": \"Rua Teste, 100\",\n  \"cidade\": \"São Paulo\",\n  \"categoria\": \"RESTAURANTE\",\n  \"possuiRampa\": true,\n  \"atendimentoLibras\": true,\n  \"cardapioBraille\": false,\n  \"aceitaCaoGuia\": true,\n  \"ambienteBaixoEstimulo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST local 2 → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema LocalResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\"))));",
+                  "pm.collectionVariables.set(\"local2\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Local Teste Estação\",\n  \"endereco\": \"Av. Teste, 200\",\n  \"cidade\": \"São Paulo\",\n  \"categoria\": \"TRANSPORTE\",\n  \"possuiRampa\": true,\n  \"atendimentoLibras\": false,\n  \"cardapioBraille\": false,\n  \"aceitaCaoGuia\": true,\n  \"ambienteBaixoEstimulo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST local inválido → 400 com campos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Aponta endereço, cidade e categoria\", () => { const b = pm.response.json(); pm.expect([\"endereco\",\"cidade\",\"categoria\"].every(f => b.campos.map(c => c.campo).includes(f))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"X\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST local com categoria inexistente → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Local Teste Restaurante\",\n  \"endereco\": \"Rua Teste, 100\",\n  \"cidade\": \"São Paulo\",\n  \"categoria\": \"PADARIA\",\n  \"possuiRampa\": true,\n  \"atendimentoLibras\": true,\n  \"cardapioBraille\": false,\n  \"aceitaCaoGuia\": true,\n  \"ambienteBaixoEstimulo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET lista locais → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema LocalResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Contém o local 1\", () => { const b = pm.response.json(); pm.expect(b.some(l => l.id == pm.collectionVariables.get(\"local1\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET local por id → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema LocalResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\"))));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET local inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "999999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT local → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema LocalResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\"))));",
+                  "pm.test(\"Recursos atualizados\", () => { const b = pm.response.json(); pm.expect(b.cardapioBraille === true && b.ambienteBaixoEstimulo === true).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Local Teste Restaurante\",\n  \"endereco\": \"Rua Teste, 100\",\n  \"cidade\": \"São Paulo\",\n  \"categoria\": \"RESTAURANTE\",\n  \"possuiRampa\": true,\n  \"atendimentoLibras\": true,\n  \"cardapioBraille\": true,\n  \"aceitaCaoGuia\": true,\n  \"ambienteBaixoEstimulo\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT local inválido → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"endereco\": \"Rua Teste, 100\",\n  \"cidade\": \"São Paulo\",\n  \"categoria\": \"RESTAURANTE\",\n  \"possuiRampa\": null,\n  \"atendimentoLibras\": true,\n  \"cardapioBraille\": false,\n  \"aceitaCaoGuia\": true,\n  \"ambienteBaixoEstimulo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT local inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "999999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Local Teste Restaurante\",\n  \"endereco\": \"Rua Teste, 100\",\n  \"cidade\": \"São Paulo\",\n  \"categoria\": \"RESTAURANTE\",\n  \"possuiRampa\": true,\n  \"atendimentoLibras\": true,\n  \"cardapioBraille\": false,\n  \"aceitaCaoGuia\": true,\n  \"ambienteBaixoEstimulo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Avaliações (pontos e nota média)",
+      "item": [
+        {
+          "name": "POST avaliação A→local1 (nota 4) → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AvaliacaoResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\"))));",
+                  "pm.collectionVariables.set(\"avaliacao1\", pm.response.json().id);",
+                  "pm.test(\"Relacionamentos achatados no DTO\", () => { const b = pm.response.json(); pm.expect(b.usuarioId == pm.collectionVariables.get(\"usuarioA\") && b.localId == pm.collectionVariables.get(\"local1\") && !!b.usuarioNome && !!b.localNome).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 4,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verifica: Usuário A ganhou 10 pontos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Usuário A ganhou 10 pontos\", () => { const b = pm.response.json(); pm.expect(b.pontos === 10).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Verifica: Nota média do local 1 = 4.0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Nota média do local 1 = 4.0\", () => { const b = pm.response.json(); pm.expect(b.notaMedia === 4).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST avaliação B→local1 (nota 5) → 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AvaliacaoResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\"))));",
+                  "pm.collectionVariables.set(\"avaliacao2\", pm.response.json().id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 5,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioB}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verifica: Nota média do local 1 = 4.5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Nota média do local 1 = 4.5\", () => { const b = pm.response.json(); pm.expect(b.notaMedia === 4.5).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST avaliação com nota 9 → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Aponta o campo nota\", () => { const b = pm.response.json(); pm.expect(b.campos.some(c => c.campo === \"nota\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 9,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST avaliação com usuário inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 3,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": 999999999,\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST avaliação com local inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 3,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": 999999999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST segunda avaliação A→local1 → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 3,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET lista avaliações → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AvaliacaoResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET avaliação por id → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AvaliacaoResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\"))));",
+                  "pm.test(\"Nota 4\", () => { const b = pm.response.json(); pm.expect(b.nota === 4).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET avaliação inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "999999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT avaliação (nota 2) → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AvaliacaoResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\"))));",
+                  "pm.test(\"Nota atualizada para 2\", () => { const b = pm.response.json(); pm.expect(b.nota === 2).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 2,\n  \"comentario\": \"Piorou\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verifica: Nota média recalculada = 3.5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Nota média recalculada = 3.5\", () => { const b = pm.response.json(); pm.expect(b.notaMedia === 3.5).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT avaliação inválida → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT avaliação inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "999999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 3,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT avaliação B para autor A (duplicaria A→local1) → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao2}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 5,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local1}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Alertas (Waze da inclusão)",
+      "item": [
+        {
+          "name": "POST alerta → 201 (ativo por padrão)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AlertaResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\"))));",
+                  "pm.collectionVariables.set(\"alerta1\", pm.response.json().id);",
+                  "pm.test(\"Nasce ativo\", () => { const b = pm.response.json(); pm.expect(b.ativo === true).to.be.true; });",
+                  "pm.test(\"dataCriacao preenchida\", () => { const b = pm.response.json(); pm.expect(!!b.dataCriacao).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local2}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Verifica: Usuário A acumulou 15 pontos (10 + 5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Usuário A acumulou 15 pontos (10 + 5)\", () => { const b = pm.response.json(); pm.expect(b.pontos === 15).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST alerta com expiração no passado → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Aponta dataExpiracao\", () => { const b = pm.response.json(); pm.expect(b.campos.some(c => c.campo === \"dataExpiracao\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2020-01-01T00:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local2}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST alerta com tipo inexistente → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"INEXISTENTE\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local2}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST alerta com local inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": 999999999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET lista alertas → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AlertaResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET alerta por id → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AlertaResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\"))));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/{{alerta1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "{{alerta1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET alerta inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "999999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT alerta (desativar) → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Corpo segue o schema AlertaResponse do OpenAPI\", () => pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\"))));",
+                  "pm.test(\"Alerta desativado\", () => { const b = pm.response.json(); pm.expect(b.ativo === false).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/{{alerta1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "{{alerta1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador consertado (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local2}},\n  \"ativo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT alerta inválido → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/{{alerta1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "{{alerta1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT alerta inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "999999999"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": {{local2}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Integridade e protocolo HTTP",
+      "item": [
+        {
+          "name": "DELETE usuário com vínculos → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE local com vínculos → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "JSON malformado → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nome\": \"sem fechar"
+            }
+          }
+        },
+        {
+          "name": "Content-Type text/plain → 415",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 415\", () => pm.response.to.have.status(415));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(415); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "nome=teste"
+            }
+          }
+        },
+        {
+          "name": "Método não suportado (PATCH) → 405",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 405\", () => pm.response.to.have.status(405));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(405); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Rota inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/inexistente",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "inexistente"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Exclusões (limpeza dos dados de teste)",
+      "item": [
+        {
+          "name": "DELETE alerta → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Sem corpo\", () => pm.expect(pm.response.text()).to.eql(\"\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/{{alerta1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "{{alerta1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE alerta já removido → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/{{alerta1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "{{alerta1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Verifica: Pontos do alerta estornados (15 → 10)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Pontos do alerta estornados (15 → 10)\", () => { const b = pm.response.json(); pm.expect(b.pontos === 10).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE avaliação 1 → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Verifica: Nota média volta a 5.0 (só a avaliação de B)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Nota média volta a 5.0 (só a avaliação de B)\", () => { const b = pm.response.json(); pm.expect(b.notaMedia === 5).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE avaliação 2 → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao2}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE avaliação inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "999999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Verifica: Sem avaliações: notaMedia nula",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Sem avaliações: notaMedia nula\", () => { const b = pm.response.json(); pm.expect(b.notaMedia === null).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE local 1 → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE local 2 → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local2}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET local excluído → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/{{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "{{local1}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE local inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais",
+                "999999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE usuário A → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE usuário B → 204",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 204\", () => pm.response.to.have.status(204));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioB}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioB}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET usuário excluído → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/{{usuarioA}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "{{usuarioA}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE usuário inexistente → 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuarios/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuarios",
+                "999999999"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
