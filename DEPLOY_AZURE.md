@@ -6,6 +6,13 @@ A imagem já deve estar publicada no Docker Hub (feito automaticamente pelo work
 > Substitua `<rm>` pelo RM de um integrante e `murilomercadante` pelo usuário do Docker Hub.
 > **Nunca** versione a senha real do banco.
 
+## Ambiente implantado
+
+- Resource group: `rg-rm554799-incluze` (brazilsouth)
+- SQL Server: `rm554799-sql-incluze.database.windows.net` · banco `aether` (camada gratuita serverless)
+- Container App: `rm554799-incluze-api`
+- URL: https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/
+
 ## 1. Variáveis
 
 ### PowerShell
@@ -77,7 +84,8 @@ az sql db create \
   --capacity 2 \
   --compute-model Serverless \
   --use-free-limit \
-  --free-limit-exhaustion-behavior AutoPause
+  --free-limit-exhaustion-behavior AutoPause \
+  --backup-storage-redundancy Local
 ```
 
 ## 5. Firewall do SQL Server
@@ -114,8 +122,11 @@ az provider register --namespace Microsoft.OperationalInsights
 az containerapp env create \
   --name $CONTAINERAPPS_ENVIRONMENT \
   --resource-group $RESOURCE_GROUP \
-  --location $LOCATION
+  --location $LOCATION \
+  --logs-destination none
 ```
+
+> Se der erro ao gerar o workspace do Log Analytics, o `--logs-destination none` evita o problema. Os logs do console continuam disponíveis com `az containerapp logs show`.
 
 ## 7. Container App (senha armazenada como *secret*)
 

@@ -4,8 +4,8 @@
 
 | Evidência | Link |
 |---|---|
-| **API no Azure (Swagger)** | `https://<fqdn-do-container-app>/` |
-| **Docker Hub** | `https://hub.docker.com/r/murilomercadante/aether-citizentech-api` |
+| **API no Azure (Swagger)** | https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/ |
+| **Docker Hub** | https://hub.docker.com/r/murilomercadante/aether-citizentech-api |
 | **GitHub** | https://github.com/MuriloMercadante/Incluze.Micro |
 | **GitHub Actions** | https://github.com/MuriloMercadante/Incluze.Micro/actions |
 
@@ -214,14 +214,14 @@ O deploy no Azure é feito conforme [DEPLOY_AZURE.md](DEPLOY_AZURE.md). Há tamb
 
 Passo a passo completo: **[DEPLOY_AZURE.md](DEPLOY_AZURE.md)**.
 
-**URL:** `https://<fqdn-do-container-app>/`
+**URL:** https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io/
 
 ## 9. Como testar
 
 Pelo **Swagger** (`/`), use *Try it out* em cada endpoint, ou pelo terminal. Defina a URL base:
 
 ```bash
-API=http://localhost:8080          # ou https://<fqdn-do-container-app>
+API=https://rm554799-incluze-api.livelytree-72ea2755.brazilsouth.azurecontainerapps.io   # ou http://localhost:8080
 ```
 
 ### Roteiro completo (CRUD + regras de negócio + persistência)
