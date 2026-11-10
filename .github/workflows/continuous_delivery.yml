@@ -84,7 +84,7 @@ jobs:
 
       - name: Publicar relatório e log da API
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: evidencias-testes-integracao
           path: |
