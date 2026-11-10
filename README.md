@@ -324,6 +324,5 @@ Use o *Query editor* do Azure SQL no Portal, ou o Azure Data Studio/SSMS. Localm
 
 | Nome | RM |
 |---|---|
-| `<nome completo>` | `<RM>` |
-| `<nome completo>` | `<RM>` |
-| `<nome completo>` | `<RM>` |
+| Murilo Mercadante | 555926 |
+| Breno Takase | 554799 |
