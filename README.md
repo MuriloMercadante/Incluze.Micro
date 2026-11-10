@@ -5,8 +5,9 @@
 | Evidência | Link |
 |---|---|
 | **API no Azure (Swagger)** | `https://<fqdn-do-container-app>/` |
-| **Docker Hub** | `https://hub.docker.com/r/<usuario-dockerhub>/aether-citizentech-api` |
-| **GitHub Actions** | aba **Actions** deste repositório → workflow *Continuous Delivery* |
+| **Docker Hub** | `https://hub.docker.com/r/murilomercadante/aether-citizentech-api` |
+| **GitHub** | https://github.com/MuriloMercadante/Incluze.Micro |
+| **GitHub Actions** | https://github.com/MuriloMercadante/Incluze.Micro/actions |
 
 ## 1. Objetivo da solução
 
@@ -164,19 +165,19 @@ O compose sobe o SQL Server 2022, cria o banco `aether` e inicia a API em **http
 
 ## 6. Docker e Docker Hub
 
-**Imagem:** `<usuario-dockerhub>/aether-citizentech-api`
+**Imagem:** `murilomercadante/aether-citizentech-api`
 **Tags publicadas a cada push na `main`:** `latest`, `v<número-da-execução>` e `<sha-curto-do-commit>`
 
 ```bash
 # obter a imagem
-docker pull <usuario-dockerhub>/aether-citizentech-api:latest
+docker pull murilomercadante/aether-citizentech-api:latest
 
 # executar (SQL Server rodando no host)
 docker run -p 8080:8080 \
   -e SPRING_PROFILES_ACTIVE=dev \
   -e DB_SERVER_URL=host.docker.internal -e DB_SERVER_PORT=1433 \
   -e DB_SCHEMA=aether -e DB_USER=sa -e DB_PWD="<senha-forte>" \
-  <usuario-dockerhub>/aether-citizentech-api:latest
+  murilomercadante/aether-citizentech-api:latest
 
 # build local
 docker build -t aether-citizentech-api:local .

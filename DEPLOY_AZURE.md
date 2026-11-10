@@ -3,7 +3,7 @@
 Pré-requisitos: [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) instalada e `az login` realizado.
 A imagem já deve estar publicada no Docker Hub (feito automaticamente pelo workflow **Continuous Delivery**).
 
-> Substitua `<rm>` pelo RM de um integrante e `<usuario-dockerhub>` pelo usuário do Docker Hub.
+> Substitua `<rm>` pelo RM de um integrante e `murilomercadante` pelo usuário do Docker Hub.
 > **Nunca** versione a senha real do banco.
 
 ## 1. Variáveis
@@ -24,7 +24,7 @@ $env:DB_USER="sqladmin"
 $env:DB_PWD="<senha-forte>"
 
 $env:SPRING_PROFILES_ACTIVE="prd"
-$env:DOCKER_IMAGE="docker.io/<usuario-dockerhub>/aether-citizentech-api:latest"
+$env:DOCKER_IMAGE="docker.io/murilomercadante/aether-citizentech-api:latest"
 ```
 
 ### Bash
@@ -43,7 +43,7 @@ export DB_USER=sqladmin
 export DB_PWD="<senha-forte>"
 
 export SPRING_PROFILES_ACTIVE=prd
-export DOCKER_IMAGE=docker.io/<usuario-dockerhub>/aether-citizentech-api:latest
+export DOCKER_IMAGE=docker.io/murilomercadante/aether-citizentech-api:latest
 ```
 
 > Os comandos abaixo estão em sintaxe Bash. No PowerShell, troque `\` por `` ` `` no fim das linhas e `$VAR` por `$env:VAR`.
@@ -185,7 +185,7 @@ Azure
     │   └── Database: aether  (tabelas: usuarios, locais, avaliacoes, alertas)
     └── Container Apps Environment: <rm>-aether-env
         └── Container App: <rm>-aether-api
-            └── Image: <usuario-dockerhub>/aether-citizentech-api:latest
+            └── Image: murilomercadante/aether-citizentech-api:latest
 ```
 
 ## 12. Fluxo
