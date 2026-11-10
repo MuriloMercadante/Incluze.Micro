@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.fiap.aether.dto.AvaliacaoRequest;
 import br.com.fiap.aether.dto.AvaliacaoResponse;
 import br.com.fiap.aether.exception.BusinessException;
+import br.com.fiap.aether.exception.ReferenciaInvalidaException;
 import br.com.fiap.aether.exception.ResourceNotFoundException;
 import br.com.fiap.aether.mapper.AvaliacaoMapper;
 import br.com.fiap.aether.model.Avaliacao;
@@ -44,8 +45,8 @@ public class AvaliacaoService {
     }
 
     @Transactional(readOnly = true)
-    public List<AvaliacaoResponse> findAll() {
-        return repository.findAll().stream().map(mapper::toDto).toList();
+    public List<AvaliacaoResponse> findAll(Long localId, Long usuarioId) {
+        return repository.buscar(localId, usuarioId).stream().map(mapper::toDto).toList();
     }
 
     @Transactional(readOnly = true)
@@ -129,13 +130,14 @@ public class AvaliacaoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Avaliação", id));
     }
 
+    /** Ids vindos do corpo: inexistente = conteúdo inválido (422), não recurso da URL (404). */
     private Usuario buscarUsuario(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário", id));
+                .orElseThrow(() -> new ReferenciaInvalidaException("usuarioId", "usuário", id));
     }
 
     private Local buscarLocal(Long id) {
         return localRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Local", id));
+                .orElseThrow(() -> new ReferenciaInvalidaException("localId", "local", id));
     }
 }

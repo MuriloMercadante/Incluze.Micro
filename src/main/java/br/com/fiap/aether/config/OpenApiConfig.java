@@ -12,7 +12,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI aetherOpenAPI() {
         return new OpenAPI().info(new Info()
-                .title("CitizenTech de Acessibilidade - API (Grupo Aether)")
+                .title("Incluze - API CitizenTech de Acessibilidade (Grupo Aether)")
                 .version("v1")
                 .description("""
                         Plataforma colaborativa (crowdsourcing) para mapear, avaliar e reportar \

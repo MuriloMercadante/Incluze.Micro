@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.fiap.aether.dto.LocalFiltro;
 import br.com.fiap.aether.dto.LocalRequest;
 import br.com.fiap.aether.dto.LocalResponse;
 import br.com.fiap.aether.exception.BusinessException;
@@ -34,8 +35,11 @@ public class LocalService {
     }
 
     @Transactional(readOnly = true)
-    public List<LocalResponse> findAll() {
-        return repository.findAll().stream().map(mapper::toDto).toList();
+    public List<LocalResponse> findAll(LocalFiltro f) {
+        String cidade = (f.cidade() == null || f.cidade().isBlank()) ? null : f.cidade().trim();
+        return repository.buscar(cidade, f.categoria(), f.possuiRampa(), f.atendimentoLibras(),
+                f.cardapioBraille(), f.aceitaCaoGuia(), f.ambienteBaixoEstimulo(), f.notaMinima())
+                .stream().map(mapper::toDto).toList();
     }
 
     @Transactional(readOnly = true)

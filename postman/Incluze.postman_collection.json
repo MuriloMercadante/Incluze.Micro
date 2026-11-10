@@ -217,7 +217,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
                   "pm.test(\"Lista os campos nome e email\", () => { const b = pm.response.json(); pm.expect(b.campos.map(c => c.campo).includes(\"nome\") && b.campos.map(c => c.campo).includes(\"email\")).to.be.true; });"
                 ]
               }
@@ -263,7 +263,7 @@
                 "exec": [
                   "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -374,7 +374,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -406,7 +406,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -486,7 +486,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -532,7 +532,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -578,7 +578,7 @@
                 "exec": [
                   "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -723,7 +723,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
                   "pm.test(\"Aponta endereço, cidade e categoria\", () => { const b = pm.response.json(); pm.expect([\"endereco\",\"cidade\",\"categoria\"].every(f => b.campos.map(c => c.campo).includes(f))).to.be.true; });"
                 ]
               }
@@ -769,7 +769,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -879,7 +879,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -958,7 +958,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1004,7 +1004,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1037,6 +1037,207 @@
                   "language": "json"
                 }
               }
+            }
+          }
+        },
+        {
+          "name": "GET filtro Libras + cidade → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema LocalResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Todos têm Libras e são de São Paulo\", () => { const b = pm.response.json(); pm.expect(b.length > 0 && b.every(l => l.atendimentoLibras === true && l.cidade.toLowerCase() === \"são paulo\")).to.be.true; });",
+                  "pm.test(\"Inclui o local 1 e exclui o local 2 (sem Libras)\", () => { const b = pm.response.json(); pm.expect(b.some(l => l.id == pm.collectionVariables.get(\"local1\")) && !b.some(l => l.id == pm.collectionVariables.get(\"local2\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais?atendimentoLibras=true&cidade=s%C3%A3o%20paulo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ],
+              "query": [
+                {
+                  "key": "atendimentoLibras",
+                  "value": "true"
+                },
+                {
+                  "key": "cidade",
+                  "value": "s%C3%A3o%20paulo"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET filtro categoria + cão-guia → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema LocalResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Todos são TRANSPORTE e aceitam cão-guia\", () => { const b = pm.response.json(); pm.expect(b.every(l => l.categoria === \"TRANSPORTE\" && l.aceitaCaoGuia === true)).to.be.true; });",
+                  "pm.test(\"Inclui o local 2\", () => { const b = pm.response.json(); pm.expect(b.some(l => l.id == pm.collectionVariables.get(\"local2\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais?categoria=TRANSPORTE&aceitaCaoGuia=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ],
+              "query": [
+                {
+                  "key": "categoria",
+                  "value": "TRANSPORTE"
+                },
+                {
+                  "key": "aceitaCaoGuia",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET filtro com categoria inexistente → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Aponta o campo categoria\", () => { const b = pm.response.json(); pm.expect(b.campos.some(c => c.campo === \"categoria\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais?categoria=PADARIA",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ],
+              "query": [
+                {
+                  "key": "categoria",
+                  "value": "PADARIA"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET filtro com notaMinima não numérica → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais?notaMinima=abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ],
+              "query": [
+                {
+                  "key": "notaMinima",
+                  "value": "abc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET filtro com notaMinima fora de 1..5 → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Aponta o campo notaMinima\", () => { const b = pm.response.json(); pm.expect(b.campos.some(c => c.campo === \"notaMinima\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais?notaMinima=9",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ],
+              "query": [
+                {
+                  "key": "notaMinima",
+                  "value": "9"
+                }
+              ]
             }
           }
         }
@@ -1235,6 +1436,45 @@
           }
         },
         {
+          "name": "GET locais com notaMinima=4.5 → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema LocalResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_LocalResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Todos com nota >= 4.5 e inclui o local 1\", () => { const b = pm.response.json(); pm.expect(b.every(l => l.notaMedia >= 4.5) && b.some(l => l.id == pm.collectionVariables.get(\"local1\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/locais?notaMinima=4.5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "locais"
+              ],
+              "query": [
+                {
+                  "key": "notaMinima",
+                  "value": "4.5"
+                }
+              ]
+            }
+          }
+        },
+        {
           "name": "POST avaliação com nota 9 → 400",
           "event": [
             {
@@ -1244,7 +1484,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
                   "pm.test(\"Aponta o campo nota\", () => { const b = pm.response.json(); pm.expect(b.campos.some(c => c.campo === \"nota\")).to.be.true; });"
                 ]
               }
@@ -1281,16 +1521,17 @@
           }
         },
         {
-          "name": "POST avaliação com usuário inexistente → 404",
+          "name": "POST avaliação com usuarioId inexistente → 422",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Status 422\", () => pm.response.to.have.status(422));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(422); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Mensagem cita usuarioId\", () => { const b = pm.response.json(); pm.expect(b.mensagem.includes(\"usuarioId\")).to.be.true; });"
                 ]
               }
             }
@@ -1326,16 +1567,17 @@
           }
         },
         {
-          "name": "POST avaliação com local inexistente → 404",
+          "name": "POST avaliação com localId inexistente → 422",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Status 422\", () => pm.response.to.have.status(422));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(422); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Mensagem cita localId\", () => { const b = pm.response.json(); pm.expect(b.mensagem.includes(\"localId\")).to.be.true; });"
                 ]
               }
             }
@@ -1380,7 +1622,7 @@
                 "exec": [
                   "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1448,6 +1690,84 @@
           }
         },
         {
+          "name": "GET avaliações filtradas por local → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AvaliacaoResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Exatamente as 2 avaliações do local 1\", () => { const b = pm.response.json(); pm.expect(b.length === 2 && b.every(a => a.localId == pm.collectionVariables.get(\"local1\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes?localId={{local1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ],
+              "query": [
+                {
+                  "key": "localId",
+                  "value": "{{local1}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET avaliações filtradas por usuário → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AvaliacaoResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AvaliacaoResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Somente a avaliação do usuário B\", () => { const b = pm.response.json(); pm.expect(b.length === 1 && b[0].usuarioId == pm.collectionVariables.get(\"usuarioB\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes?usuarioId={{usuarioB}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes"
+              ],
+              "query": [
+                {
+                  "key": "usuarioId",
+                  "value": "{{usuarioB}}"
+                }
+              ]
+            }
+          }
+        },
+        {
           "name": "GET avaliação por id → 200",
           "event": [
             {
@@ -1490,7 +1810,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1601,7 +1921,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1647,7 +1967,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1684,6 +2004,52 @@
           }
         },
         {
+          "name": "PUT avaliação com localId inexistente → 422",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 422\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(422); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/avaliacoes/{{avaliacao1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "avaliacoes",
+                "{{avaliacao1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nota\": 3,\n  \"comentario\": \"Teste de integração\",\n  \"acessibilidadeConfirmada\": true,\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": 999999999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
           "name": "PUT avaliação B para autor A (duplicaria A→local1) → 409",
           "event": [
             {
@@ -1693,7 +2059,7 @@
                 "exec": [
                   "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1824,7 +2190,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });",
                   "pm.test(\"Aponta dataExpiracao\", () => { const b = pm.response.json(); pm.expect(b.campos.some(c => c.campo === \"dataExpiracao\")).to.be.true; });"
                 ]
               }
@@ -1870,7 +2236,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1906,16 +2272,16 @@
           }
         },
         {
-          "name": "POST alerta com local inexistente → 404",
+          "name": "POST alerta com localId inexistente → 422",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Status 422\", () => pm.response.to.have.status(422));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(422); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -1942,6 +2308,51 @@
             "body": {
               "mode": "raw",
               "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": {{usuarioA}},\n  \"localId\": 999999999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST alerta com usuarioId inexistente → 422",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 422\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(422); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": 999999999,\n  \"localId\": {{local2}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1978,6 +2389,125 @@
                 "api",
                 "v1",
                 "alertas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET alertas vigentes do local 2 → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AlertaResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Contém o alerta 1 e todos estão ativos\", () => { const b = pm.response.json(); pm.expect(b.some(a => a.id == pm.collectionVariables.get(\"alerta1\")) && b.every(a => a.ativo === true && a.localId == pm.collectionVariables.get(\"local2\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas?ativo=true&localId={{local2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ],
+              "query": [
+                {
+                  "key": "ativo",
+                  "value": "true"
+                },
+                {
+                  "key": "localId",
+                  "value": "{{local2}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET alertas por tipo → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AlertaResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Todos são ELEVADOR_QUEBRADO\", () => { const b = pm.response.json(); pm.expect(b.length > 0 && b.every(a => a.tipo === \"ELEVADOR_QUEBRADO\")).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas?tipo=ELEVADOR_QUEBRADO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "ELEVADOR_QUEBRADO"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET alertas com tipo inexistente → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas?tipo=INVALIDO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "INVALIDO"
+                }
               ]
             }
           }
@@ -2024,7 +2554,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2094,6 +2624,136 @@
           }
         },
         {
+          "name": "GET alertas encerrados do local 2 → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Lista é um array\", () => pm.expect(pm.response.json()).to.be.an(\"array\"));",
+                  "pm.test(\"Itens seguem o schema AlertaResponse\", () => { const s = JSON.parse(pm.collectionVariables.get(\"schema_AlertaResponse\")); pm.response.json().forEach(i => pm.expect(tv4.validate(i, s), JSON.stringify(tv4.error)).to.be.true); });",
+                  "pm.test(\"Alerta 1 agora aparece como encerrado\", () => { const b = pm.response.json(); pm.expect(b.some(a => a.id == pm.collectionVariables.get(\"alerta1\")) && b.every(a => a.ativo === false)).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas?ativo=false&localId={{local2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ],
+              "query": [
+                {
+                  "key": "ativo",
+                  "value": "false"
+                },
+                {
+                  "key": "localId",
+                  "value": "{{local2}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET alertas vigentes não incluem o encerrado → 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Alerta 1 não aparece\", () => { const b = pm.response.json(); pm.expect(!b.some(a => a.id == pm.collectionVariables.get(\"alerta1\"))).to.be.true; });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas?ativo=true&localId={{local2}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas"
+              ],
+              "query": [
+                {
+                  "key": "ativo",
+                  "value": "true"
+                },
+                {
+                  "key": "localId",
+                  "value": "{{local2}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT alerta com usuarioId inexistente → 422",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 422\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(422); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/alertas/{{alerta1}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alertas",
+                "{{alerta1}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Elevador fora de serviço (teste)\",\n  \"descricao\": \"Gerado pelo teste de integração\",\n  \"tipo\": \"ELEVADOR_QUEBRADO\",\n  \"dataExpiracao\": \"2030-12-31T18:00:00\",\n  \"usuarioId\": 999999999,\n  \"localId\": {{local2}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
           "name": "PUT alerta inválido → 400",
           "event": [
             {
@@ -2103,7 +2763,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2149,7 +2809,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2200,7 +2860,7 @@
                 "exec": [
                   "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2232,7 +2892,7 @@
                 "exec": [
                   "pm.test(\"Status 409\", () => pm.response.to.have.status(409));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(409); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2264,7 +2924,7 @@
                 "exec": [
                   "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(400); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2304,7 +2964,7 @@
                 "exec": [
                   "pm.test(\"Status 415\", () => pm.response.to.have.status(415));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(415); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(415); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2344,7 +3004,7 @@
                 "exec": [
                   "pm.test(\"Status 405\", () => pm.response.to.have.status(405));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(405); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(405); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2390,7 +3050,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2458,7 +3118,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2616,7 +3276,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2742,7 +3402,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2774,7 +3434,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2868,7 +3528,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }
@@ -2900,7 +3560,7 @@
                 "exec": [
                   "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
                   "pm.test(\"Tempo de resposta < 15s\", () => pm.expect(pm.response.responseTime).to.be.below(15000));",
-                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
+                  "pm.test(\"Erro padronizado (ErrorResponse) sem detalhes internos\", () => { pm.response.to.have.jsonSchema(JSON.parse(pm.collectionVariables.get(\"schema_ErrorResponse\"))); pm.expect(pm.response.json().status).to.eql(404); const txt = pm.response.text().toLowerCase(); [\"exception\", \"stacktrace\", \"trace\", \"sqlserver\", \"hibernate\", \"java.\", \"br.com.\", \"failed to convert\", \"jdbc\"].forEach(w => pm.expect(txt).to.not.include(w)); });"
                 ]
               }
             }

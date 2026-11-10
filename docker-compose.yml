@@ -3,7 +3,7 @@
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: aether-sqlserver
+    container_name: incluze-sqlserver
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: ${DB_PWD:?Defina DB_PWD no arquivo .env}
@@ -29,7 +29,7 @@ services:
 
   api:
     build: .
-    container_name: aether-api
+    container_name: incluze-api
     depends_on:
       sqlserver-init:
         condition: service_completed_successfully

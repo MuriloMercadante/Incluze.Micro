@@ -31,7 +31,7 @@ $env:DB_USER="sqladmin"
 $env:DB_PWD="<senha-forte>"
 
 $env:SPRING_PROFILES_ACTIVE="prd"
-$env:DOCKER_IMAGE="docker.io/murilomercadante/aether-citizentech-api:latest"
+$env:DOCKER_IMAGE="docker.io/murilomercadante/incluze-api:latest"
 ```
 
 ### Bash
@@ -50,7 +50,7 @@ export DB_USER=sqladmin
 export DB_PWD="<senha-forte>"
 
 export SPRING_PROFILES_ACTIVE=prd
-export DOCKER_IMAGE=docker.io/murilomercadante/aether-citizentech-api:latest
+export DOCKER_IMAGE=docker.io/murilomercadante/incluze-api:latest
 ```
 
 > Os comandos abaixo estão em sintaxe Bash. No PowerShell, troque `\` por `` ` `` no fim das linhas e `$VAR` por `$env:VAR`.
@@ -196,7 +196,7 @@ Azure
     │   └── Database: aether  (tabelas: usuarios, locais, avaliacoes, alertas)
     └── Container Apps Environment: <rm>-aether-env
         └── Container App: <rm>-aether-api
-            └── Image: murilomercadante/aether-citizentech-api:latest
+            └── Image: murilomercadante/incluze-api:latest
 ```
 
 ## 12. Fluxo

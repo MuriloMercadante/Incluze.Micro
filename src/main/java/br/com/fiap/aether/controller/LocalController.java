@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springdoc.core.annotations.ParameterObject;
+
 import br.com.fiap.aether.dto.ErrorResponse;
+import br.com.fiap.aether.dto.LocalFiltro;
 import br.com.fiap.aether.dto.LocalRequest;
 import br.com.fiap.aether.dto.LocalResponse;
 import br.com.fiap.aether.service.LocalService;
@@ -44,10 +47,12 @@ public class LocalController {
     }
 
     @GetMapping
-    @Operation(summary = "Listar locais")
+    @Operation(summary = "Listar locais (com filtros de acessibilidade)",
+            description = "Todos os filtros são opcionais e combináveis. Ex.: ?atendimentoLibras=true&aceitaCaoGuia=true&cidade=São Paulo")
     @ApiResponse(responseCode = "200", description = "Lista de locais")
-    public ResponseEntity<List<LocalResponse>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+    @ApiResponse(responseCode = "400", description = "Filtro inválido", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    public ResponseEntity<List<LocalResponse>> findAll(@Valid @ParameterObject LocalFiltro filtro) {
+        return ResponseEntity.ok(service.findAll(filtro));
     }
 
     @GetMapping("/{id}")

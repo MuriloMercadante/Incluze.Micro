@@ -8,10 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.fiap.aether.dto.AlertaRequest;
 import br.com.fiap.aether.dto.AlertaResponse;
+import br.com.fiap.aether.exception.ReferenciaInvalidaException;
 import br.com.fiap.aether.exception.ResourceNotFoundException;
 import br.com.fiap.aether.mapper.AlertaMapper;
 import br.com.fiap.aether.model.Alerta;
 import br.com.fiap.aether.model.Local;
+import br.com.fiap.aether.model.TipoAlerta;
 import br.com.fiap.aether.model.Usuario;
 import br.com.fiap.aether.repository.AlertaRepository;
 import br.com.fiap.aether.repository.LocalRepository;
@@ -20,8 +22,9 @@ import br.com.fiap.aether.repository.UsuarioRepository;
 /**
  * Regras de negócio dos alertas temporários ("Waze da inclusão"):
  * - todo alerta nasce ativo (salvo se informado o contrário);
- * - reportar um alerta concede pontos de gamificação ao usuário;
- * - alertas com data de expiração vencida são desativados automaticamente.
+ * - reportar um alerta concede pontos de gamificação ao usuário (estornados na exclusão);
+ * - um alerta com data de expiração vencida é apresentado como inativo
+ *   (calculado na leitura, sem efeito colateral nas consultas GET).
  */
 @Service
 @Transactional
@@ -42,15 +45,20 @@ public class AlertaService {
         this.mapper = mapper;
     }
 
-    public List<AlertaResponse> findAll() {
-        return repository.findAll().stream()
-                .map(this::desativarSeExpirado)
-                .map(mapper::toDto)
+    /**
+     * @param ativo true = somente alertas vigentes; false = somente encerrados/expirados; null = todos
+     */
+    @Transactional(readOnly = true)
+    public List<AlertaResponse> findAll(Long localId, TipoAlerta tipo, Boolean ativo) {
+        LocalDateTime agora = LocalDateTime.now();
+        return repository.buscar(localId, tipo, ativo, agora).stream()
+                .map(a -> toResponse(a, agora))
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public AlertaResponse findById(Long id) {
-        return mapper.toDto(desativarSeExpirado(buscar(id)));
+        return toResponse(buscar(id), LocalDateTime.now());
     }
 
     public AlertaResponse create(AlertaRequest request) {
@@ -66,7 +74,7 @@ public class AlertaService {
 
         usuario.setPontos(usuario.getPontos() + PONTOS_POR_ALERTA);
 
-        return mapper.toDto(salvo);
+        return toResponse(salvo, LocalDateTime.now());
     }
 
     public AlertaResponse update(Long id, AlertaRequest request) {
@@ -89,7 +97,7 @@ public class AlertaService {
             usuario.setPontos(usuario.getPontos() + PONTOS_POR_ALERTA);
         }
 
-        return mapper.toDto(salvo);
+        return toResponse(salvo, LocalDateTime.now());
     }
 
     public void deleteById(Long id) {
@@ -99,12 +107,11 @@ public class AlertaService {
         removerPontos(usuario, PONTOS_POR_ALERTA);
     }
 
-    private Alerta desativarSeExpirado(Alerta alerta) {
-        if (Boolean.TRUE.equals(alerta.getAtivo())
-                && alerta.getDataExpiracao().isBefore(LocalDateTime.now())) {
-            alerta.setAtivo(false); // persistido ao final da transação
-        }
-        return alerta;
+    /** "ativo" na resposta = marcado como ativo E ainda dentro da validade. */
+    private AlertaResponse toResponse(Alerta alerta, LocalDateTime agora) {
+        AlertaResponse dto = mapper.toDto(alerta);
+        dto.setAtivo(Boolean.TRUE.equals(alerta.getAtivo()) && alerta.getDataExpiracao().isAfter(agora));
+        return dto;
     }
 
     private void removerPontos(Usuario usuario, int pontos) {
@@ -116,13 +123,14 @@ public class AlertaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Alerta", id));
     }
 
+    /** Ids vindos do corpo: inexistente = conteúdo inválido (422), não recurso da URL (404). */
     private Usuario buscarUsuario(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário", id));
+                .orElseThrow(() -> new ReferenciaInvalidaException("usuarioId", "usuário", id));
     }
 
     private Local buscarLocal(Long id) {
         return localRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Local", id));
+                .orElseThrow(() -> new ReferenciaInvalidaException("localId", "local", id));
     }
 }

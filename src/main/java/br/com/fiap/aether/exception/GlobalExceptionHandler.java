@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -35,6 +37,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return build(HttpStatus.NOT_FOUND, ex.getMessage(), request, List.of());
     }
 
+    /** 422 - o corpo referencia um recurso inexistente (ex.: usuarioId que não existe). */
+    @ExceptionHandler(ReferenciaInvalidaException.class)
+    public ResponseEntity<ErrorResponse> handleReferenciaInvalida(ReferenciaInvalidaException ex, WebRequest request) {
+        return build(HttpStatus.UNPROCESSABLE_CONTENT, ex.getMessage(), request, List.of());
+    }
+
+    /**
+     * 503 - banco de dados indisponível (ex.: Azure SQL serverless retomando após pausa).
+     * O cliente recebe Retry-After em vez de um 500 genérico.
+     */
+    @ExceptionHandler({ CannotCreateTransactionException.class, DataAccessResourceFailureException.class })
+    public ResponseEntity<ErrorResponse> handleBancoIndisponivel(Exception ex, WebRequest request) {
+        log.warn("Banco de dados indisponível: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .header(HttpHeaders.RETRY_AFTER, "30")
+                .body(body(HttpStatus.SERVICE_UNAVAILABLE,
+                        "Banco de dados temporariamente indisponível. Tente novamente em alguns segundos.",
+                        request, List.of()));
+    }
+
     /** 409 - regra de negócio violada (ex.: e-mail duplicado). */
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusiness(BusinessException ex, WebRequest request) {
@@ -61,8 +83,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
             HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        // Falha de conversão (ex.: "abc" em campo numérico, enum inexistente) traria
+        // nomes de classes Java na mensagem padrão: substituída por texto neutro.
         List<CampoInvalido> campos = ex.getBindingResult().getFieldErrors().stream()
-                .map(fe -> new CampoInvalido(fe.getField(), fe.getDefaultMessage()))
+                .map(fe -> new CampoInvalido(fe.getField(), fe.isBindingFailure()
+                        ? "Valor inválido para o campo '" + fe.getField() + "'"
+                        : fe.getDefaultMessage()))
                 .toList();
         return new ResponseEntity<>(
                 body(HttpStatus.BAD_REQUEST, "Dados de entrada inválidos", request, campos),
@@ -85,6 +111,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             case NOT_FOUND -> "Rota não encontrada";
             case METHOD_NOT_ALLOWED -> "Método HTTP não suportado para esta rota";
             case UNSUPPORTED_MEDIA_TYPE -> "Content-Type não suportado. Utilize application/json";
+            case NOT_ACCEPTABLE -> "Formato de resposta não suportado. Utilize application/json";
             default -> status.getReasonPhrase();
         };
         return new ResponseEntity<>(body(status, mensagem, request, List.of()), headers, status);

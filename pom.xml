@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fiap</groupId>
-	<artifactId>aether-citizentech-api</artifactId>
+	<artifactId>incluze-api</artifactId>
 	<version>1.0.0</version>
-	<name>aether-citizentech-api</name>
-	<description>CitizenTech - API de mapeamento colaborativo de acessibilidade (Grupo Aether)</description>
+	<name>incluze-api</name>
+	<description>Incluze - API de mapeamento colaborativo de acessibilidade (Grupo Aether)</description>
 
 	<properties>
 		<java.version>17</java.version>

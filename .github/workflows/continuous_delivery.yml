@@ -7,11 +7,21 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: aether-citizentech-api
+  IMAGE_NAME: incluze-api
 
 jobs:
-  build_and_push_to_docker_hub:
+  # 1) Compila, roda os testes unitários e os testes de integração (Postman/Newman)
+  #    contra a API real conectada a um SQL Server 2022 efêmero.
+  build_and_test:
+    name: Build + testes unitários e de integração
     runs-on: ubuntu-latest
+
+    env:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_SERVER_URL: localhost
+      DB_SERVER_PORT: "1433"
+      DB_SCHEMA: incluze_ci
+      DB_USER: sa
 
     steps:
       - name: Checkout
@@ -24,10 +34,72 @@ jobs:
           java-version: "17"
           cache: maven
 
-      - name: Build da aplicação e testes (Maven)
+      - name: Build da aplicação e testes unitários (Maven)
         run: |
           chmod +x mvnw
           ./mvnw -B clean package
+
+      - name: Subir SQL Server 2022 efêmero e criar o banco de testes
+        run: |
+          # senha aleatória gerada a cada execução (nada versionado, mascarada nos logs)
+          DB_PWD="Ci$(openssl rand -hex 16)#1"
+          echo "::add-mask::$DB_PWD"
+          echo "DB_PWD=$DB_PWD" >> "$GITHUB_ENV"
+          docker run -d --name sqlserver -p 1433:1433 \
+            -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD="$DB_PWD" \
+            mcr.microsoft.com/mssql/server:2022-latest
+          for i in $(seq 1 40); do
+            if docker exec sqlserver /opt/mssql-tools18/bin/sqlcmd \
+                 -S localhost -U sa -P "$DB_PWD" -C -Q "SELECT 1" > /dev/null 2>&1; then
+              echo "SQL Server pronto"; break
+            fi
+            echo "SQL Server iniciando... ($i)"; sleep 5
+          done
+          docker exec sqlserver /opt/mssql-tools18/bin/sqlcmd \
+            -S localhost -U sa -P "$DB_PWD" -C -Q "CREATE DATABASE $DB_SCHEMA"
+
+      - name: Subir a API
+        run: |
+          nohup java -jar target/app.jar > api.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:8080/v3/api-docs > /dev/null; then echo "API no ar"; exit 0; fi
+            sleep 2
+          done
+          echo "A API não subiu:"; tail -100 api.log; exit 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Testes de integração (Postman/Newman)
+        run: |
+          npm install -g newman@6.2.1 newman-reporter-htmlextra@1.23.1 --no-audit --no-fund
+          newman run postman/Incluze.postman_collection.json \
+            -e postman/Incluze-Azure.postman_environment.json \
+            --env-var baseUrl=http://localhost:8080 \
+            -r cli,htmlextra \
+            --reporter-htmlextra-export newman/relatorio-integracao.html \
+            --reporter-htmlextra-title "Incluze API - Testes de Integracao (CI)"
+
+      - name: Publicar relatório e log da API
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: evidencias-testes-integracao
+          path: |
+            newman/relatorio-integracao.html
+            api.log
+
+  # 2) Só publica a imagem se todos os testes passarem.
+  push_to_docker_hub:
+    name: Build e push da imagem no Docker Hub
+    needs: build_and_test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
       - name: Generate image tags
         id: meta
