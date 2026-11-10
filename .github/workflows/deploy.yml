@@ -1,0 +1,43 @@
+# Deploy no Azure Container Apps (OPCIONAL - execução manual).
+# O enunciado não exige deploy automático; este workflow apenas facilita
+# atualizar o Container App para a imagem :latest publicada no Docker Hub.
+name: Deploy Azure (manual)
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+  AZURE_CONTAINER_APP: ${{ vars.AZURE_CONTAINER_APP }}
+  DOCKER_IMAGE: docker.io/${{ vars.DOCKER_USER }}/aether-citizentech-api:latest
+
+jobs:
+  deploy:
+    name: Deploy to Azure Container Apps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Update Container App
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az containerapp update \
+              --name "$AZURE_CONTAINER_APP" \
+              --resource-group "$AZURE_RESOURCE_GROUP" \
+              --image "$DOCKER_IMAGE" \
+              --revision-suffix "r${GITHUB_RUN_NUMBER}"
+
+      - name: Show deployment
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az containerapp show \
+              --name "$AZURE_CONTAINER_APP" \
+              --resource-group "$AZURE_RESOURCE_GROUP" \
+              --query "{name:name, status:properties.runningStatus, fqdn:properties.configuration.ingress.fqdn}" \
+              --output table

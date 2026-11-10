@@ -1,0 +1,141 @@
+package br.com.fiap.aether.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.fiap.aether.dto.AvaliacaoRequest;
+import br.com.fiap.aether.dto.AvaliacaoResponse;
+import br.com.fiap.aether.exception.BusinessException;
+import br.com.fiap.aether.exception.ResourceNotFoundException;
+import br.com.fiap.aether.mapper.AvaliacaoMapper;
+import br.com.fiap.aether.model.Avaliacao;
+import br.com.fiap.aether.model.Local;
+import br.com.fiap.aether.model.Usuario;
+import br.com.fiap.aether.repository.AvaliacaoRepository;
+import br.com.fiap.aether.repository.LocalRepository;
+import br.com.fiap.aether.repository.UsuarioRepository;
+
+/**
+ * Regras de negócio das avaliações:
+ * - cada usuário pode avaliar um mesmo local apenas uma vez;
+ * - cada avaliação concede pontos de gamificação ao usuário (e os remove se for excluída);
+ * - a nota média do local é recalculada a cada inclusão, alteração ou exclusão.
+ */
+@Service
+@Transactional
+public class AvaliacaoService {
+
+    public static final int PONTOS_POR_AVALIACAO = 10;
+
+    private final AvaliacaoRepository repository;
+    private final UsuarioRepository usuarioRepository;
+    private final LocalRepository localRepository;
+    private final AvaliacaoMapper mapper;
+
+    public AvaliacaoService(AvaliacaoRepository repository, UsuarioRepository usuarioRepository,
+            LocalRepository localRepository, AvaliacaoMapper mapper) {
+        this.repository = repository;
+        this.usuarioRepository = usuarioRepository;
+        this.localRepository = localRepository;
+        this.mapper = mapper;
+    }
+
+    @Transactional(readOnly = true)
+    public List<AvaliacaoResponse> findAll() {
+        return repository.findAll().stream().map(mapper::toDto).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public AvaliacaoResponse findById(Long id) {
+        return mapper.toDto(buscar(id));
+    }
+
+    public AvaliacaoResponse create(AvaliacaoRequest request) {
+        Usuario usuario = buscarUsuario(request.getUsuarioId());
+        Local local = buscarLocal(request.getLocalId());
+
+        if (repository.existsByUsuarioIdAndLocalId(usuario.getId(), local.getId())) {
+            throw new BusinessException("Este usuário já avaliou este local. Atualize a avaliação existente");
+        }
+
+        Avaliacao avaliacao = mapper.toModel(request);
+        avaliacao.setUsuario(usuario);
+        avaliacao.setLocal(local);
+        avaliacao.setDataAvaliacao(LocalDateTime.now());
+        Avaliacao salva = repository.save(avaliacao);
+
+        usuario.setPontos(usuario.getPontos() + PONTOS_POR_AVALIACAO);
+        atualizarNotaMedia(local);
+
+        return mapper.toDto(salva);
+    }
+
+    public AvaliacaoResponse update(Long id, AvaliacaoRequest request) {
+        Avaliacao avaliacao = buscar(id);
+        Usuario usuarioAnterior = avaliacao.getUsuario();
+        Local localAnterior = avaliacao.getLocal();
+
+        Usuario usuario = buscarUsuario(request.getUsuarioId());
+        Local local = buscarLocal(request.getLocalId());
+
+        if (repository.existsByUsuarioIdAndLocalIdAndIdNot(usuario.getId(), local.getId(), id)) {
+            throw new BusinessException("Este usuário já possui outra avaliação para este local");
+        }
+
+        mapper.updateModel(request, avaliacao);
+        avaliacao.setUsuario(usuario);
+        avaliacao.setLocal(local);
+        Avaliacao salva = repository.save(avaliacao);
+
+        // se a avaliação mudou de autor, os pontos acompanham
+        if (!usuarioAnterior.getId().equals(usuario.getId())) {
+            removerPontos(usuarioAnterior, PONTOS_POR_AVALIACAO);
+            usuario.setPontos(usuario.getPontos() + PONTOS_POR_AVALIACAO);
+        }
+
+        atualizarNotaMedia(local);
+        if (!localAnterior.getId().equals(local.getId())) {
+            atualizarNotaMedia(localAnterior);
+        }
+
+        return mapper.toDto(salva);
+    }
+
+    public void deleteById(Long id) {
+        Avaliacao avaliacao = buscar(id);
+        Usuario usuario = avaliacao.getUsuario();
+        Local local = avaliacao.getLocal();
+
+        repository.delete(avaliacao);
+
+        removerPontos(usuario, PONTOS_POR_AVALIACAO);
+        atualizarNotaMedia(local);
+    }
+
+    private void atualizarNotaMedia(Local local) {
+        Double media = repository.calcularNotaMedia(local.getId());
+        local.setNotaMedia(media == null ? null : Math.round(media * 10.0) / 10.0);
+    }
+
+    private void removerPontos(Usuario usuario, int pontos) {
+        usuario.setPontos(Math.max(0, usuario.getPontos() - pontos));
+    }
+
+    private Avaliacao buscar(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Avaliação", id));
+    }
+
+    private Usuario buscarUsuario(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário", id));
+    }
+
+    private Local buscarLocal(Long id) {
+        return localRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Local", id));
+    }
+}

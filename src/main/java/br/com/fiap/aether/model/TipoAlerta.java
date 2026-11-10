@@ -1,0 +1,11 @@
+package br.com.fiap.aether.model;
+
+public enum TipoAlerta {
+    ELEVADOR_QUEBRADO,
+    OBRA_NA_CALCADA,
+    PISO_TATIL_OBSTRUIDO,
+    RAMPA_BLOQUEADA,
+    BANHEIRO_ACESSIVEL_INDISPONIVEL,
+    INTERPRETE_LIBRAS_AUSENTE,
+    OUTRO
+}

@@ -1,0 +1,44 @@
+# Ambiente LOCAL completo: SQL Server + criação do banco + API.
+# Uso: copie .env.example para .env, defina DB_PWD e rode: docker compose up --build
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: aether-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${DB_PWD:?Defina DB_PWD no arquivo .env}
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      DB_PWD: ${DB_PWD}
+      DB_SCHEMA: ${DB_SCHEMA:-aether}
+    entrypoint: ["/bin/bash", "-c", "/opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P \"$$DB_PWD\" -C -Q \"IF DB_ID('$$DB_SCHEMA') IS NULL CREATE DATABASE [$$DB_SCHEMA]\""]
+    restart: "no"
+
+  api:
+    build: .
+    container_name: aether-api
+    depends_on:
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_SERVER_URL: sqlserver
+      DB_SERVER_PORT: "1433"
+      DB_SCHEMA: ${DB_SCHEMA:-aether}
+      DB_USER: sa
+      DB_PWD: ${DB_PWD}
+    ports:
+      - "8080:8080"
