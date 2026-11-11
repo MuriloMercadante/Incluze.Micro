@@ -96,9 +96,15 @@ Critérios usados de forma consistente:
 
 | Rota | Parâmetros opcionais (combináveis) |
 |---|---|
-| `GET /api/v1/locais` | `cidade`, `categoria`, `possuiRampa`, `atendimentoLibras`, `cardapioBraille`, `aceitaCaoGuia`, `ambienteBaixoEstimulo`, `notaMinima` (1–5) |
+| `GET /api/v1/locais` | `cidade`, `categoria`, `possuiRampa`, `possuiBanheiroAdaptado`, `possuiElevador`, `possuiPisoTatil`, `atendimentoLibras`, `cardapioBraille`, `aceitaCaoGuia`, `ambienteBaixoEstimulo`, `verificado`, `notaMinima` (1–5) |
 | `GET /api/v1/avaliacoes` | `localId`, `usuarioId` |
 | `GET /api/v1/alertas` | `localId`, `tipo`, `ativo` (`true` = vigentes, `false` = encerrados ou expirados) |
+
+### Endpoint do app mobile
+
+`GET /api/v1/locais/app` devolve os locais no formato consumido pelo app Flutter **INCLUZE** ([Incluze.flutter](https://github.com/MuriloMercadante/Incluze.flutter)): categoria como rótulo legível, recursos de acessibilidade como lista de códigos (`cadeirante`, `banheiro_adaptado`, `elevador`, `piso_tatil`, `libras`, `braille`, `cao_guia`, `baixo_estimulo`), nota média, total de avaliações e selo `verificado`.
+
+Um local é **verificado** quando pelo menos **3 avaliações confirmam** a acessibilidade no local (`acessibilidadeConfirmada = true`). A nota, o total e o selo são recalculados pela Service a cada avaliação criada, alterada ou excluída.
 
 ### Formato padronizado de erro
 
