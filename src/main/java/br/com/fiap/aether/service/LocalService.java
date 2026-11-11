@@ -3,9 +3,11 @@ package br.com.fiap.aether.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.fiap.aether.dto.LocalAppResponse;
 import br.com.fiap.aether.dto.LocalFiltro;
 import br.com.fiap.aether.dto.LocalRequest;
 import br.com.fiap.aether.dto.LocalResponse;
@@ -38,8 +40,16 @@ public class LocalService {
     public List<LocalResponse> findAll(LocalFiltro f) {
         String cidade = (f.cidade() == null || f.cidade().isBlank()) ? null : f.cidade().trim();
         return repository.buscar(cidade, f.categoria(), f.possuiRampa(), f.atendimentoLibras(),
-                f.cardapioBraille(), f.aceitaCaoGuia(), f.ambienteBaixoEstimulo(), f.notaMinima())
+                f.cardapioBraille(), f.aceitaCaoGuia(), f.ambienteBaixoEstimulo(),
+                f.possuiBanheiroAdaptado(), f.possuiElevador(), f.possuiPisoTatil(),
+                f.verificado(), f.notaMinima())
                 .stream().map(mapper::toDto).toList();
+    }
+
+    /** Todos os locais no formato consumido pelo app mobile. */
+    @Transactional(readOnly = true)
+    public List<LocalAppResponse> findAllApp() {
+        return repository.findAll(Sort.by("id")).stream().map(mapper::toAppDto).toList();
     }
 
     @Transactional(readOnly = true)
@@ -49,16 +59,29 @@ public class LocalService {
 
     public LocalResponse create(LocalRequest request) {
         Local local = mapper.toModel(request);
-        local.setNotaMedia(null); // sem avaliações ainda
+        normalizarRecursosOpcionais(local);
+        // indicadores controlados pela API: começam zerados
+        local.setNotaMedia(null);
+        local.setTotalAvaliacoes(0);
+        local.setVerificado(false);
         local.setDataCadastro(LocalDateTime.now());
         return mapper.toDto(repository.save(local));
     }
 
     public LocalResponse update(Long id, LocalRequest request) {
         Local local = buscar(id);
-        // notaMedia e dataCadastro são controlados pela API e não mudam na atualização
+        // notaMedia, totalAvaliacoes, verificado e dataCadastro são controlados
+        // pela API e não fazem parte do request, então não mudam na atualização
         mapper.updateModel(request, local);
+        normalizarRecursosOpcionais(local);
         return mapper.toDto(repository.save(local));
+    }
+
+    /** Recursos opcionais no request: ausente = não possui. */
+    private void normalizarRecursosOpcionais(Local local) {
+        local.setPossuiBanheiroAdaptado(Boolean.TRUE.equals(local.getPossuiBanheiroAdaptado()));
+        local.setPossuiElevador(Boolean.TRUE.equals(local.getPossuiElevador()));
+        local.setPossuiPisoTatil(Boolean.TRUE.equals(local.getPossuiPisoTatil()));
     }
 
     public void deleteById(Long id) {

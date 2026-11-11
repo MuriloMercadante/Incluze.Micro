@@ -29,12 +29,30 @@ public class Local {
     @Column(nullable = false, length = 200)
     private String endereco;
 
+    @Column(length = 80)
+    private String bairro;
+
     @Column(nullable = false, length = 80)
     private String cidade;
+
+    @Column(length = 500)
+    private String descricao;
+
+    @Column(name = "imagem_url", length = 500)
+    private String imagemUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private CategoriaLocal categoria;
+
+    @Column(name = "possui_banheiro_adaptado", nullable = false)
+    private Boolean possuiBanheiroAdaptado;
+
+    @Column(name = "possui_elevador", nullable = false)
+    private Boolean possuiElevador;
+
+    @Column(name = "possui_piso_tatil", nullable = false)
+    private Boolean possuiPisoTatil;
 
     @Column(name = "possui_rampa", nullable = false)
     private Boolean possuiRampa;
@@ -54,6 +72,81 @@ public class Local {
     /** Media das notas recebidas nas avaliacoes (calculada pela Service). */
     @Column(name = "nota_media")
     private Double notaMedia;
+
+    /** Quantidade de avaliações recebidas (calculada pela Service). */
+    @Column(name = "total_avaliacoes", nullable = false)
+    private Integer totalAvaliacoes;
+
+    /**
+     * Local verificado pela comunidade: possui ao menos 3 avaliações que
+     * confirmaram a acessibilidade no local (calculado pela Service).
+     */
+    @Column(nullable = false)
+    private Boolean verificado;
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
+
+    public Boolean getPossuiBanheiroAdaptado() {
+        return possuiBanheiroAdaptado;
+    }
+
+    public void setPossuiBanheiroAdaptado(Boolean possuiBanheiroAdaptado) {
+        this.possuiBanheiroAdaptado = possuiBanheiroAdaptado;
+    }
+
+    public Boolean getPossuiElevador() {
+        return possuiElevador;
+    }
+
+    public void setPossuiElevador(Boolean possuiElevador) {
+        this.possuiElevador = possuiElevador;
+    }
+
+    public Boolean getPossuiPisoTatil() {
+        return possuiPisoTatil;
+    }
+
+    public void setPossuiPisoTatil(Boolean possuiPisoTatil) {
+        this.possuiPisoTatil = possuiPisoTatil;
+    }
+
+    public Integer getTotalAvaliacoes() {
+        return totalAvaliacoes;
+    }
+
+    public void setTotalAvaliacoes(Integer totalAvaliacoes) {
+        this.totalAvaliacoes = totalAvaliacoes;
+    }
+
+    public Boolean getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(Boolean verificado) {
+        this.verificado = verificado;
+    }
 
     @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;

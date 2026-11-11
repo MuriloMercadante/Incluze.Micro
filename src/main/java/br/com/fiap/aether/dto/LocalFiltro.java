@@ -28,6 +28,18 @@ public record LocalFiltro(
         @Schema(description = "Somente ambientes de baixo estímulo (espectro autista)")
         Boolean ambienteBaixoEstimulo,
 
+        @Schema(description = "Somente locais com banheiro adaptado")
+        Boolean possuiBanheiroAdaptado,
+
+        @Schema(description = "Somente locais com elevador")
+        Boolean possuiElevador,
+
+        @Schema(description = "Somente locais com piso tátil")
+        Boolean possuiPisoTatil,
+
+        @Schema(description = "Somente locais verificados pela comunidade")
+        Boolean verificado,
+
         @Schema(description = "Nota média mínima (1 a 5)", example = "4")
         @DecimalMin(value = "1.0", message = "A nota mínima deve ser entre 1 e 5")
         @DecimalMax(value = "5.0", message = "A nota mínima deve ser entre 1 e 5")

@@ -18,6 +18,78 @@ public class LocalResponse {
     private Boolean ambienteBaixoEstimulo;
     private Double notaMedia;
     private LocalDateTime dataCadastro;
+    private String bairro;
+    private String descricao;
+    private String imagemUrl;
+    private Boolean possuiBanheiroAdaptado;
+    private Boolean possuiElevador;
+    private Boolean possuiPisoTatil;
+    private Integer totalAvaliacoes;
+    private Boolean verificado;
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
+
+    public Boolean getPossuiBanheiroAdaptado() {
+        return possuiBanheiroAdaptado;
+    }
+
+    public void setPossuiBanheiroAdaptado(Boolean possuiBanheiroAdaptado) {
+        this.possuiBanheiroAdaptado = possuiBanheiroAdaptado;
+    }
+
+    public Boolean getPossuiElevador() {
+        return possuiElevador;
+    }
+
+    public void setPossuiElevador(Boolean possuiElevador) {
+        this.possuiElevador = possuiElevador;
+    }
+
+    public Boolean getPossuiPisoTatil() {
+        return possuiPisoTatil;
+    }
+
+    public void setPossuiPisoTatil(Boolean possuiPisoTatil) {
+        this.possuiPisoTatil = possuiPisoTatil;
+    }
+
+    public Integer getTotalAvaliacoes() {
+        return totalAvaliacoes;
+    }
+
+    public void setTotalAvaliacoes(Integer totalAvaliacoes) {
+        this.totalAvaliacoes = totalAvaliacoes;
+    }
+
+    public Boolean getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(Boolean verificado) {
+        this.verificado = verificado;
+    }
 
     public Long getId() {
         return id;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springdoc.core.annotations.ParameterObject;
 
 import br.com.fiap.aether.dto.ErrorResponse;
+import br.com.fiap.aether.dto.LocalAppResponse;
 import br.com.fiap.aether.dto.LocalFiltro;
 import br.com.fiap.aether.dto.LocalRequest;
 import br.com.fiap.aether.dto.LocalResponse;
@@ -53,6 +54,15 @@ public class LocalController {
     @ApiResponse(responseCode = "400", description = "Filtro inválido", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     public ResponseEntity<List<LocalResponse>> findAll(@Valid @ParameterObject LocalFiltro filtro) {
         return ResponseEntity.ok(service.findAll(filtro));
+    }
+
+    @GetMapping("/app")
+    @Operation(summary = "Listar locais no formato do app mobile",
+            description = "Endpoint consumido pelo app Flutter INCLUZE: categoria como rótulo legível, "
+                    + "recursos de acessibilidade como lista de códigos, nota, total de avaliações e selo de verificado.")
+    @ApiResponse(responseCode = "200", description = "Lista de locais no formato do app")
+    public ResponseEntity<List<LocalAppResponse>> findAllApp() {
+        return ResponseEntity.ok(service.findAllApp());
     }
 
     @GetMapping("/{id}")

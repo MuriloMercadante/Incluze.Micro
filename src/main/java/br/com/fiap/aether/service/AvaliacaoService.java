@@ -23,13 +23,15 @@ import br.com.fiap.aether.repository.UsuarioRepository;
  * Regras de negócio das avaliações:
  * - cada usuário pode avaliar um mesmo local apenas uma vez;
  * - cada avaliação concede pontos de gamificação ao usuário (e os remove se for excluída);
- * - a nota média do local é recalculada a cada inclusão, alteração ou exclusão.
+ * - a nota média e o total de avaliações do local são recalculados a cada inclusão, alteração ou exclusão;
+ * - o local recebe o selo "verificado" quando ao menos 3 avaliações confirmam a acessibilidade.
  */
 @Service
 @Transactional
 public class AvaliacaoService {
 
     public static final int PONTOS_POR_AVALIACAO = 10;
+    public static final int MINIMO_CONFIRMACOES_VERIFICADO = 3;
 
     private final AvaliacaoRepository repository;
     private final UsuarioRepository usuarioRepository;
@@ -69,7 +71,7 @@ public class AvaliacaoService {
         Avaliacao salva = repository.save(avaliacao);
 
         usuario.setPontos(usuario.getPontos() + PONTOS_POR_AVALIACAO);
-        atualizarNotaMedia(local);
+        atualizarIndicadores(local);
 
         return mapper.toDto(salva);
     }
@@ -97,9 +99,9 @@ public class AvaliacaoService {
             usuario.setPontos(usuario.getPontos() + PONTOS_POR_AVALIACAO);
         }
 
-        atualizarNotaMedia(local);
+        atualizarIndicadores(local);
         if (!localAnterior.getId().equals(local.getId())) {
-            atualizarNotaMedia(localAnterior);
+            atualizarIndicadores(localAnterior);
         }
 
         return mapper.toDto(salva);
@@ -113,12 +115,19 @@ public class AvaliacaoService {
         repository.delete(avaliacao);
 
         removerPontos(usuario, PONTOS_POR_AVALIACAO);
-        atualizarNotaMedia(local);
+        atualizarIndicadores(local);
     }
 
-    private void atualizarNotaMedia(Local local) {
+    /**
+     * Recalcula os indicadores do local a partir das avaliações gravadas:
+     * nota média, total de avaliações e selo de verificado pela comunidade.
+     */
+    private void atualizarIndicadores(Local local) {
         Double media = repository.calcularNotaMedia(local.getId());
         local.setNotaMedia(media == null ? null : Math.round(media * 10.0) / 10.0);
+        local.setTotalAvaliacoes((int) repository.countByLocalId(local.getId()));
+        local.setVerificado(repository.countByLocalIdAndAcessibilidadeConfirmadaTrue(local.getId())
+                >= MINIMO_CONFIRMACOES_VERIFICADO);
     }
 
     private void removerPontos(Usuario usuario, int pontos) {

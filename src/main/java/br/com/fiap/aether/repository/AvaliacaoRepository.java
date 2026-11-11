@@ -23,6 +23,10 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
     @Query("select avg(a.nota * 1.0) from Avaliacao a where a.local.id = :localId")
     Double calcularNotaMedia(@Param("localId") Long localId);
 
+    long countByLocalId(Long localId);
+
+    long countByLocalIdAndAcessibilidadeConfirmadaTrue(Long localId);
+
     /** Avaliações filtradas opcionalmente por local e/ou usuário. */
     @Query("""
             select a from Avaliacao a

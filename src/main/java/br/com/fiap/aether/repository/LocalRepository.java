@@ -26,6 +26,10 @@ public interface LocalRepository extends JpaRepository<Local, Long> {
               and (:cardapioBraille is null or l.cardapioBraille = :cardapioBraille)
               and (:aceitaCaoGuia is null or l.aceitaCaoGuia = :aceitaCaoGuia)
               and (:ambienteBaixoEstimulo is null or l.ambienteBaixoEstimulo = :ambienteBaixoEstimulo)
+              and (:possuiBanheiroAdaptado is null or l.possuiBanheiroAdaptado = :possuiBanheiroAdaptado)
+              and (:possuiElevador is null or l.possuiElevador = :possuiElevador)
+              and (:possuiPisoTatil is null or l.possuiPisoTatil = :possuiPisoTatil)
+              and (:verificado is null or l.verificado = :verificado)
               and (:notaMinima is null or l.notaMedia >= :notaMinima)
             order by l.id
             """)
@@ -36,5 +40,9 @@ public interface LocalRepository extends JpaRepository<Local, Long> {
             @Param("cardapioBraille") Boolean cardapioBraille,
             @Param("aceitaCaoGuia") Boolean aceitaCaoGuia,
             @Param("ambienteBaixoEstimulo") Boolean ambienteBaixoEstimulo,
+            @Param("possuiBanheiroAdaptado") Boolean possuiBanheiroAdaptado,
+            @Param("possuiElevador") Boolean possuiElevador,
+            @Param("possuiPisoTatil") Boolean possuiPisoTatil,
+            @Param("verificado") Boolean verificado,
             @Param("notaMinima") Double notaMinima);
 }
