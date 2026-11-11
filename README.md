@@ -102,7 +102,7 @@ Critérios usados de forma consistente:
 
 ### Formato padronizado de erro
 
-Nenhuma resposta expõe stack trace, SQL, nomes de classes ou mensagem interna de exceção. Isso é verificado automaticamente pelos testes de integração em todas as respostas de erro.
+Nenhuma resposta expõe stack trace, SQL, nomes de classes ou mensagem interna de exceção.
 
 ```json
 {
@@ -211,11 +211,7 @@ Disparado **automaticamente a cada push na branch `main`**, em dois jobs:
 
 **Job 1: build e testes** (`build_and_test`)
 1. Checkout e setup do Java 17
-2. `./mvnw clean package`: compila e roda os testes unitários
-3. Sobe um **SQL Server 2022** efêmero (com senha aleatória gerada na execução e mascarada no log) e cria o banco de testes
-4. Sobe a API, que cria o schema via `db/schema.sql`
-5. Roda a **collection do Postman (Newman)** contra a API real. Qualquer falha interrompe o pipeline
-6. Publica o relatório HTML dos testes e o log da API como *artifact* da execução
+2. `./mvnw clean package`: compila a aplicação e roda os testes unitários
 
 **Job 2: publicação** (`push_to_docker_hub`, só roda se o job 1 passar)
 1. Geração das tags (`v<run_number>`, `<sha>`, `latest`)
@@ -329,30 +325,7 @@ SELECT * FROM alertas;
 Use o *Query editor* do Azure SQL no Portal, ou o Azure Data Studio/SSMS. Localmente:
 `docker exec -it incluze-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "<senha>" -C -d aether -Q "SELECT * FROM usuarios"`.
 
-## 10. Testes de integração (Postman)
-
-A collection [`postman/Incluze.postman_collection.json`](postman/Incluze.postman_collection.json) foi gerada a partir do OpenAPI (`/v3/api-docs`) e cobre **as 20 operações documentadas** em 90 requisições e 313 asserções:
-
-- status HTTP de sucesso e de erro (201, 200, 204, 302, 400, 404, 405, 409, 415, 422);
-- filtros das listagens (Libras, cão-guia, categoria, cidade, nota mínima, alertas vigentes e encerrados);
-- contrato: cada resposta é validada contra o JSON Schema do DTO publicado no OpenAPI;
-- erros: formato `ErrorResponse` e ausência de stack trace, nomes de classes ou detalhes internos;
-- regras de negócio: pontos (+10/+5 e estorno), nota média recalculada, unicidade de e-mail e de avaliação, bloqueio de exclusão com vínculos;
-- limpeza: todos os registros criados pelo teste são excluídos no final.
-
-A collection roda **automaticamente no CI** a cada push (seção 7), contra um SQL Server real. O relatório de cada execução fica no *artifact* `evidencias-testes-integracao` da aba Actions.
-
-**Evidência (execução contra o Azure):** [`postman/evidencias/relatorio-newman.html`](postman/evidencias/relatorio-newman.html).
-
-Para rodar no **Postman**: *Import* → selecione a collection e o environment `postman/Incluze-Azure.postman_environment.json` → *Run collection*.
-
-Para rodar pelo terminal (Newman):
-
-```bash
-npx newman run postman/Incluze.postman_collection.json -e postman/Incluze-Azure.postman_environment.json
-```
-
-## 11. Estrutura do projeto
+## 10. Estrutura do projeto
 
 ```text
 .
@@ -371,15 +344,15 @@ npx newman run postman/Incluze.postman_collection.json -e postman/Incluze-Azure.
 ├── src/main/resources/
 │   ├── application.properties
 │   ├── application-dev.properties
-│   └── application-prd.properties
-├── postman/          # collection, environment e evidências dos testes
+│   ├── application-prd.properties
+│   └── db/schema.sql  # schema versionado do SQL Server
 ├── Dockerfile
 ├── docker-compose.yml
 ├── DEPLOY_AZURE.md
 └── README.md
 ```
 
-## 12. Integrantes
+## 11. Integrantes
 
 | Nome | RM |
 |---|---|
