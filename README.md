@@ -54,7 +54,7 @@ usuarios 1 ──── N alertas    N ──── 1 locais
 | Tabela | Atributos | Obrigatórios |
 |---|---|---|
 | `usuarios` | id, nome, email (único), tipo_deficiencia, cidade, pontos, data_cadastro | nome, email, pontos, data_cadastro |
-| `locais` | id, nome, endereco, cidade, categoria, possui_rampa, atendimento_libras, cardapio_braille, aceita_cao_guia, ambiente_baixo_estimulo, nota_media, data_cadastro | nome, endereco, cidade, categoria, recursos (booleanos), data_cadastro |
+| `locais` | id, nome, endereco, bairro, cidade, descricao, imagem_url, categoria, possui_rampa, possui_banheiro_adaptado, possui_elevador, possui_piso_tatil, atendimento_libras, cardapio_braille, aceita_cao_guia, ambiente_baixo_estimulo, nota_media, total_avaliacoes, verificado, data_cadastro | nome, endereco, cidade, categoria, recursos (booleanos), total_avaliacoes, verificado, data_cadastro |
 | `avaliacoes` | id, nota (1–5), comentario, acessibilidade_confirmada, data_avaliacao, usuario_id (FK), local_id (FK) | nota, acessibilidade_confirmada, data_avaliacao, usuario_id, local_id |
 | `alertas` | id, titulo, descricao, tipo, ativo, data_criacao, data_expiracao, usuario_id (FK), local_id (FK) | titulo, tipo, ativo, data_criacao, data_expiracao, usuario_id, local_id |
 
@@ -289,6 +289,7 @@ curl -i $API/api/v1/alertas
 curl -i "$API/api/v1/locais?atendimentoLibras=true&aceitaCaoGuia=true&notaMinima=4"
 curl -i "$API/api/v1/alertas?ativo=true&localId=1"        # barreiras vigentes no local 1
 curl -i "$API/api/v1/avaliacoes?localId=1"
+curl -i "$API/api/v1/locais/app"                          # formato consumido pelo app Flutter
 
 # 6. Atualizar → 200
 curl -i -X PUT $API/api/v1/avaliacoes/1 -H "Content-Type: application/json" -d '{
