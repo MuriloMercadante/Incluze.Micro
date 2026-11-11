@@ -1,2 +1,6 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+
+# Relatorios gerados pelos testes (Newman): fora das estatisticas de linguagem do GitHub
+postman/evidencias/** linguist-generated=true
+postman/*.json linguist-generated=true
